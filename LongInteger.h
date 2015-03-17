@@ -7,13 +7,12 @@
 using std::string;
 
 
-class LongInteger {
-
+class LongInteger
+{
 private:
     ProjectList * list;
 
 public:
-
     LongInteger(const string&);
     ~LongInteger();
 

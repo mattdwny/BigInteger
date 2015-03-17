@@ -3,8 +3,8 @@
 
 #include "Position.h"
 
-class DLLNode : public Position {
-
+class DLLNode : public Position
+{
 private:
     DLLNode * next;
     DLLNode * prev;

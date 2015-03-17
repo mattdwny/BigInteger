@@ -4,8 +4,8 @@
 #include "ProjectList.h"
 #include "DLLNode.h"
 
-class DLLProjectList : public ProjectList {
-
+class DLLProjectList : public ProjectList
+{
 private:
     DLLNode * head;
     DLLNode * tail;

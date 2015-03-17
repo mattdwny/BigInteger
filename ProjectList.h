@@ -3,8 +3,8 @@
 
 #include "Position.h"
 
-class ProjectList {
-
+class ProjectList
+{
 public:
 
     virtual ~ProjectList() { }
