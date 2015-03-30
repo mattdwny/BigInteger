@@ -7,23 +7,24 @@ class ProjectList
 {
 public:
 
-    virtual ~ProjectList() { }
+	virtual ProjectList() { }
+	virtual ~ProjectList() { }
 
-    virtual void insertFirst(int) = 0;
-    virtual void insertLast(int) = 0;
+	virtual Position* After(const Position*) = 0;
+	virtual Position* Before(const Position*) = 0;
 
-    virtual Position* first() = 0;
-    virtual Position* last() = 0;
+	virtual Position* First() = 0;
+	virtual Position* Last() = 0;
 
-    virtual Position* before(const Position*) = 0;
-    virtual Position* after(const Position*) = 0;
+	virtual void InsertFirst(int) = 0;
+	virtual void InsertLast(int) = 0;
 
-    virtual bool isFirst(const Position*) = 0;
-    virtual bool isLast(const Position*) = 0;
+	virtual bool IsEmpty() const = 0;
 
-    virtual bool isEmpty() = 0;
+	virtual bool IsFirst(const Position*) const = 0;
+	virtual bool IsLast(const Position*) const = 0;
 
-    virtual int size() = 0;
+	virtual std::size_t Size() const = 0;
 };
 
 

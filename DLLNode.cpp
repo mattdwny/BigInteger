@@ -1,7 +1,18 @@
 #include "DLLNode.h"
 
-DLLNode::DLLNode(int value, DLLNode * next, DLLNode * prev) : Position(value)
+DLLNode::DLLNode(int value, DLLNode* next, DLLNode* prev) : Position(value)
 {
-	this->next = next;
-	this->prev = prev;
+	m_next = next;
+	m_prev = prev;
 }
+
+DLLNode::~DLLNode()
+{
+
+}
+
+void DLLNode::SetNext(const DLLNode* next) { m_next = next; }
+void DLLNode::SetPrev(const DLLNode* prev) { m_prev = prev; }
+	
+DLLNode* DLLNode::GetNext() const { return m_next; }
+DLLNode* DLLNode::GetPrev() const { return m_prev; }

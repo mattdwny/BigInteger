@@ -6,30 +6,31 @@
 
 using std::string;
 
-
 class LongInteger
 {
 private:
-    ProjectList * list;
+	ProjectList* list;
+	enum Sign {NEGATIVE = 1, ZERO = 2, POSITIVE = 3};
+	Sign sign;
 
 public:
-    LongInteger(const string&);
-    ~LongInteger();
+	LongInteger(const string&);
+	~LongInteger();
 
-    void output();
+	LongInteger* Add(const LongInteger*) const;
+	LongInteger* Subtract(const LongInteger*) const;
+	LongInteger* Multiply(const LongInteger*) const;
+	LongInteger* Power(const int pow) const;
 
-    bool getSign();
+	int DigitCount() const;
+	
+	bool EqualTo(const LongInteger *) const;
+	bool LessThan(const LongInteger*) const;
+	bool GreaterThan(const LongInteger*) const;
 
-    int getDigitCount();
-
-    bool equalTo(const LongInteger *) const;
-    bool lessThan(const LongInteger*) const;
-    bool greaterThan(const LongInteger*) const;
-
-    LongInteger* add(const LongInteger*) const;
-    LongInteger* subtract(const LongInteger*) const;
-    LongInteger* multiply(const LongInteger*) const;
-    LongInteger* power(const int pow) const;
+	void Output() const;
+	
+	Sign Sign() const;
 };
 
 #endif // LONGINTEGER_H

@@ -7,28 +7,30 @@
 class DLLProjectList : public ProjectList
 {
 private:
-    DLLNode * head;
-    DLLNode * tail;
+	Position* head;
+	Post* tail;
+	std::size_t size;
 
 public:
-    DLLProjectList();
-    ~DLLProjectList();
+	DLLProjectList();
+	~DLLProjectList();
 
-    void insertFirst(int);
-    void insertLast(int);
+	Position* After(const Position*);
+	Position* Before(const Position*);
 
-    Position* first();
-    Position* last();
+	Position* First();
 
-    Position* before(const Position*);
-    Position* after(const Position*);
+	void InsertFirst(int);
+	void InsertLast(int);
 
-    bool isFirst(const Position*);
-    bool isLast(const Position*);
+	bool IsEmpty() const;
 
-    bool isEmpty();
+	bool IsFirst(const Position*) const;
+	bool IsLast(const Position*) const;
 
-    int size();
+	Position* Last();
+
+	std::size_t Size() const;
 };
 
 #endif
