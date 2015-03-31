@@ -59,6 +59,6 @@ int Underflow(int val)
  */
 int UpperHalf(int val)
 {
-	assert(overflow(val) == 0);
+	//assert(Overflow(val) == 0);
 	return val / 10000;
 }

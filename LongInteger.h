@@ -1,7 +1,7 @@
 #ifndef LONGINTEGER_H
 #define LONGINTEGER_H
 
-#include <String>
+#include <string>
 #include "DLLProjectList.h"
 
 using std::string;
@@ -21,15 +21,16 @@ public:
 	LongInteger* Multiply(const LongInteger*) const;
 	LongInteger* Power(const int) const;
 
-	int DigitCount() const;
+	void BlockOutput() const;
+	void Output() const;
+	
+	size_t DigitCount() const;
 	
 	bool EqualTo(const LongInteger *) const;
 	bool LessThan(const LongInteger*) const;
 	bool GreaterThan(const LongInteger*) const;
-
-	void Output() const;
 	
-	Sign Sign() const;
+	bool Sign() const;
 };
 
 #endif // LONGINTEGER_H

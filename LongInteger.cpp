@@ -1,4 +1,9 @@
+#include <stdio.h>
+#include <cstddef>
+#include <string>
+#include <stdlib.h>
 #include "LongInteger.h"
+#include "UtilityOperations.h"
 
 LongInteger::LongInteger(const string& str)
 {
@@ -24,30 +29,29 @@ LongInteger::LongInteger(const string& str)
 	
 	if(mod == 0) mod = 8;
 	
-	list.InsertFirst(str.substr(first, mod));
-	1,9
+	list->InsertFirst(atoi(str.substr(first, mod).c_str()));
 	
-	for(size_t cursor = first + mod; i < str.length(); cursor += 8)
+	for(size_t cursor = first + mod; cursor < str.length(); cursor += 8)
 	{
-		list.InsertLast(str.substr(i,8));
+		list->InsertLast(atoi(str.substr(cursor,8).c_str()));
 	}
 }
 
-LongInteger::LongInteger(const LongInteger& ref)
+/*LongInteger::LongInteger(const LongInteger& ref)
 {
 	LongInteger* clone = new LongInteger();
 	
 	
 	
 	return clone;
-}
+}*/
 
 LongInteger::~LongInteger()
 {
     delete this->list;
 }
 
-LongInteger* LongInteger::Add(const LongInteger* that) const
+/*LongInteger* LongInteger::Add(const LongInteger* that) const
 {
 	//Only works for "+" + "+", but delegating work is a pro strat
 	Position* temp1 = this->list->Last();
@@ -60,29 +64,29 @@ LongInteger* LongInteger::Add(const LongInteger* that) const
 	
 	int carry = 0;
 	
-	while(carry || s1 || s2)
+	while(carry || i || j)
 	{
 		int value = carry;
 		if(i)
 		{
-			value += temp1->GetValue();
+			value += temp1->Value();
 			i -= 1;
 			if(i) temp1 = this->list->Before(temp1);
 		}
 		if(j)
 		{
-			value += temp2->GetValue();
+			value += temp2->Value();
 			j -= 1;
 			if(j) temp2 = that->list->Before(temp2);
 		}
-		carry = UtilityOperations.Overflow(value);
-		value = UtilityOperations.Underflow(value);
+		carry = Overflow(value);
+		value = Underflow(value);
 		
 		sum->list->InsertFirst(value);
 	}
 	
 	return sum;
-}
+}*/
 
 void LongInteger::BlockOutput() const
 {
@@ -102,14 +106,14 @@ size_t LongInteger::DigitCount() const
 	size_t size = this->list->Size() - 1;
 	if(size == -1) size = 0;
 	size *= 8; //Logic error: this can overflow
-	if(this->list->First() != NULL) size += UtilityOperations.Digits(this->list->First().GetValue());
+	if(this->list->First() != NULL) size += Digits(this->list->First()->Value());
 	return size; 
 }
 
 bool LongInteger::EqualTo(const LongInteger* that) const
 {
-	if(this->Size() != i->Size()) return false;
-	if(this->Sign() != i->Sign()) return false;
+	if(this->list->Size() != that->list->Size()) return false;
+	if(this->Sign() != that->Sign()) return false;
 	
 	Position* temp1 = this->list->Last();
 	Position* temp2 = that->list->Last();
@@ -126,8 +130,8 @@ bool LongInteger::EqualTo(const LongInteger* that) const
 
 bool LongInteger::GreaterThan(const LongInteger* that) const
 {
-	if(this->Size() != i->Size()) return this->Size() > that->Size();
-	if(this->Size() != i->Size()) return this->Sign()*this->Size() > this->Sign()*that->Size();
+	if(this->list->Size() != that->list->Size()) return this->list->Size() > that->list->Size();
+	if(this->list->Size() != that->list->Size()) return this->Sign()*this->list->Size() > this->Sign()*that->list->Size();
 
 	Position* temp1 = this->list->Last();
 	Position* temp2 = that->list->Last();
@@ -144,8 +148,8 @@ bool LongInteger::GreaterThan(const LongInteger* that) const
 
 bool LongInteger::LessThan(const LongInteger* that) const
 {
-	if(this->Sign() != i->Sign()) return this->Sign() < that->Sign();
-	if(this->Size() != i->Size()) return this->Sign()*this->Size() < this->Sign()*that->Size();
+	if(this->Sign() != that->Sign()) return this->Sign() < that->Sign();
+	if(this->list->Size() != that->list->Size()) return this->Sign()*this->list->Size() < this->Sign()*that->list->Size();
 	
 	Position* temp1 = this->list->Last();
 	Position* temp2 = that->list->Last();
@@ -167,7 +171,7 @@ LongInteger* LongInteger::Multiply(const LongInteger* that) const
 
 void LongInteger::Output() const
 {
-	if(this->Sign()) printf('-');
+	if(this->Sign()) printf("-");
 	Position* temp = this->list->First();
 	
 	if(temp) printf("%d", temp->Value());
@@ -185,7 +189,7 @@ LongInteger* LongInteger::Power(const int p) const
 
 }
 
-bool LongInteger::Sign()
+bool LongInteger::Sign() const
 {
 	return sign == -1;
 }

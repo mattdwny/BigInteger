@@ -1,22 +1,23 @@
 #ifndef DLLPROJECTLIST_H
 #define DLLPROJECTLIST_H
 
+#include <cstddef>
 #include "ProjectList.h"
 #include "DLLNode.h"
 
 class DLLProjectList : public ProjectList
 {
 private:
-	Position* head;
-	Post* tail;
-	std::size_t size;
+	DLLNode* head;
+	DLLNode* tail;
+	size_t size;
 
 public:
 	DLLProjectList();
 	~DLLProjectList();
 
-	Position* After(const Position*);
-	Position* Before(const Position*);
+	Position* After(Position*);
+	Position* Before(Position*);
 
 	Position* First();
 
@@ -25,12 +26,12 @@ public:
 
 	bool IsEmpty() const;
 
-	bool IsFirst(const Position*) const;
-	bool IsLast(const Position*) const;
+	bool IsFirst(Position*) const;
+	bool IsLast(Position*) const;
 
 	Position* Last();
 
-	std::size_t Size() const;
+	size_t Size() const;
 };
 
 #endif

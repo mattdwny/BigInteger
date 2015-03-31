@@ -13,11 +13,11 @@ public:
 	DLLNode(int, DLLNode*, DLLNode*);
 	~DLLNode();
 
-	DLLNode* GetNext() const { return m_next; }
-	DLLNode* GetPrev() const { return m_prev; }
+	DLLNode* GetNext();
+	DLLNode* GetPrev();
 
-	void SetNext(const DLLNode* next) { m_next = next; }
-	void SetPrev(const DLLNode* prev) { m_prev = prev; }
+	void SetNext(DLLNode* next);
+	void SetPrev(DLLNode* prev);
 };
 
 #endif

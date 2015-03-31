@@ -8,8 +8,8 @@ DLLNode::DLLNode(int value, DLLNode* next, DLLNode* prev) : Position(value)
 
 DLLNode::~DLLNode() { }
 
-void DLLNode::SetNext(const DLLNode* next) { m_next = next; }
-void DLLNode::SetPrev(const DLLNode* prev) { m_prev = prev; }
+void DLLNode::SetNext(DLLNode* next) { m_next = next; }
+void DLLNode::SetPrev(DLLNode* prev) { m_prev = prev; }
 	
-DLLNode* DLLNode::GetNext() const { return m_next; }
-DLLNode* DLLNode::GetPrev() const { return m_prev; }
+DLLNode* DLLNode::GetNext() { return m_next; }
+DLLNode* DLLNode::GetPrev() { return m_prev; }

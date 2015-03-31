@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "DLLProjectList.h"
 
 DLLProjectList::DLLProjectList()
@@ -17,16 +18,16 @@ DLLProjectList::~DLLProjectList()
  * @param a Position ADT pos representing the current node
  * @return the Position ADT representing the node after the current node, assuming the input is valid
  */
-Position* DLLProjectList::After(const Position* pos)
+Position* DLLProjectList::After(Position* pos)
 {
-	DLLNode* node = dynamic_cast<DLLNode*>(pos);
+	DLLNode* node = static_cast<DLLNode*>(pos);
 	
 	if(node == tail)
 	{
-		throw Exception("DLLProjectList-After: cannot call After on tail of list");
+		throw std::invalid_argument("DLLProjectList-After: cannot call After on tail of list");
 	}
 	
-	return node.GetNext();
+	return node->GetNext();
 }
 
 /**
@@ -35,16 +36,16 @@ Position* DLLProjectList::After(const Position* pos)
  * @param a Position ADT pos representing the current node
  * @return the Position ADT representing the node before the current node, assuming the input is valid
  */
-Position* DLLProjectList::Before(const Position* pos)
+Position* DLLProjectList::Before(Position* pos)
 {
-	DLLNode* node = dynamic_cast<DLLNode*>(pos);
+	DLLNode* node = static_cast<DLLNode*>(pos);
 	
 	if(node == head)
 	{
-		throw Exception("DLLProjectList-Before: cannot call Before on head of list");
+		throw std::invalid_argument("DLLProjectList-Before: cannot call Before on head of list");
 	}
 	
-	return node.GetPrev();
+	return node->GetPrev();
 }
 
 /**
@@ -64,14 +65,14 @@ Position* DLLProjectList::First()
  */
 void DLLProjectList::InsertFirst(int val)
 {
-	DLLNode* node = DLLNode(val, head, NULL);
+	DLLNode* node = new DLLNode(val, head, NULL);
 	if(head == NULL)
 	{
 		head = tail = node;
 	}
 	else
 	{
-		head.setPrev(node);
+		head->SetPrev(node);
 		head = node;
 	}
 	
@@ -85,14 +86,14 @@ void DLLProjectList::InsertFirst(int val)
  */
 void DLLProjectList::InsertLast(int val)
 {
-	DLLNode* node = DLLNode(val, NULL, tail);
+	DLLNode* node = new DLLNode(val, NULL, tail);
 	if(tail == NULL)
 	{
 		head = tail = node;
 	}
 	else
 	{
-		tail.setNext(node);
+		tail->SetNext(node);
 		tail = node;
 	}
 	
@@ -104,7 +105,7 @@ void DLLProjectList::InsertLast(int val)
  *
  * @return false if there are no nodes in the linked list, true otherwise
  */
-bool DLLProjectList::IsEmpty()
+bool DLLProjectList::IsEmpty() const
 {
 	return head == NULL;
 }
@@ -115,9 +116,9 @@ bool DLLProjectList::IsEmpty()
  * @param a Position ADT pos
  * @return boolean indicating whether or not Position pos is the head of the linked list
  */
-bool DLLProjectList::IsFirst(const Position* pos)
+bool DLLProjectList::IsFirst(Position* pos) const
 {
-	DLLNode* node = dynamic_cast<DLLNode*>(pos);
+	DLLNode* node = static_cast<DLLNode*>(pos);
 	
 	return node == head;
 }
@@ -128,9 +129,9 @@ bool DLLProjectList::IsFirst(const Position* pos)
  * @param a Position ADT p
  * @return boolean indicating whether or not Position pos is the tail of the linked list
  */
-bool DLLProjectList::IsLast(const Position* pos)
+bool DLLProjectList::IsLast(Position* pos) const
 {
-	DLLNode* node = dynamic_cast<DLLNode*>(pos);
+	DLLNode* node = static_cast<DLLNode*>(pos);
 	
 	return node == tail;
 }
@@ -150,7 +151,7 @@ Position* DLLProjectList::Last()
  *
  * @return the number of nodes in the linked list 
  */
-std::size_t DLLProjectList::Size()
+size_t DLLProjectList::Size() const
 {
 	return size;
 }
