@@ -45,6 +45,8 @@ int main(int argc, char* argv[])
 		cout << endl;
 	}
 	
+	cout << endl;
+	
 	/**
 	 * Begin Step 3
 	 */
@@ -58,6 +60,8 @@ int main(int argc, char* argv[])
 		cout << endl;
 	}
 	
+	cout << endl;
+	
 	/**
 	 * Begin Step 4
 	 */
@@ -65,10 +69,10 @@ int main(int argc, char* argv[])
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
 	{
 		LongInteger* f = units[c1 - 97];
-		cout << c1 << " is ";
-		f->Output();
-		cout << " with sign " << f->Sign() << " and digits " << f->DigitCount() << endl;
+		cout << c1 << " has sign " << f->Sign() << " and digits " << f->DigitCount() << endl;
 	}
+	
+	cout << endl;
 	
 	/**
 	 * Begin Step 5
@@ -76,8 +80,6 @@ int main(int argc, char* argv[])
 	
 	int a = 2222;
 	int b = 99999999;
-	
-	cout << endl;
 	
 	cout << "a's Digits is " << Digits(a) << endl;
 	cout << "a's LowerHalf is " << LowerHalf(a) << endl;
@@ -93,6 +95,8 @@ int main(int argc, char* argv[])
 	cout << "b's Underflow is " << Underflow(b) << endl;
 	cout << "b's UpperHalf is " << UpperHalf(b) << endl;
 	
+	cout << endl;
+	
 	/**
 	 * Begin Step 6
 	 */
@@ -105,25 +109,13 @@ int main(int argc, char* argv[])
 		{
 			LongInteger* s = units[c2 - 97];
 			
-			cout << c1 << " = " << c2 << " => ";
-			f->Output();
-			cout << " = ";
-			s->Output();
-			cout << endl;
+			cout << c1 << " = " << c2 << endl;
 			cout << f->EqualTo(s) << endl;
 			
-			cout << c1 << " < " << c2 << " => ";
-			f->Output();
-			cout << " < ";
-			s->Output();
-			cout << endl;
+			cout << c1 << " < " << c2 << endl;
 			cout << f->LessThan(s) << endl;
 			
-			cout << c1 << " > " << c2 << " => ";
-			f->Output();
-			cout << " > ";
-			s->Output();
-			cout << endl;
+			cout << c1 << " > " << c2 << endl;
 			cout << f->GreaterThan(s) << endl;
 		}
 	}

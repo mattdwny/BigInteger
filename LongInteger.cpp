@@ -113,7 +113,7 @@ size_t LongInteger::DigitCount() const
 bool LongInteger::EqualTo(const LongInteger* that) const
 {
 	if(this->list->Size() != that->list->Size()) return false;
-	if(this->Sign() != that->Sign()) return false;
+	if(this->sign != that->sign) return false;
 	
 	Position* temp1 = this->list->Last();
 	Position* temp2 = that->list->Last();
@@ -130,38 +130,38 @@ bool LongInteger::EqualTo(const LongInteger* that) const
 
 bool LongInteger::GreaterThan(const LongInteger* that) const
 {
-	if(this->list->Size() != that->list->Size()) return this->list->Size() > that->list->Size();
-	if(this->list->Size() != that->list->Size()) return this->Sign()*this->list->Size() > this->Sign()*that->list->Size();
+	if(this->sign != that->sign) return this->sign > that->sign;
+	if(this->list->Size() != that->list->Size()) return this->sign*this->list->Size() > that->sign*that->list->Size();
 
 	Position* temp1 = this->list->Last();
 	Position* temp2 = that->list->Last();
 	
 	while(!this->list->IsFirst(temp1))
 	{
-		if(temp1->Value() != temp2->Value()) return this->Sign()*temp1->Value() > that->Sign()*temp2->Value();
+		if(temp1->Value() != temp2->Value()) return this->sign*temp1->Value() > that->sign*temp2->Value();
 		
 		temp1 = this->list->Before(temp1);
 		temp2 = that->list->Before(temp2);
 	}
-	return this->Sign()*temp1->Value() > that->Sign()*temp2->Value();
+	return this->sign*temp1->Value() > that->sign*temp2->Value();
 }
 
 bool LongInteger::LessThan(const LongInteger* that) const
 {
-	if(this->Sign() != that->Sign()) return this->Sign() < that->Sign();
-	if(this->list->Size() != that->list->Size()) return this->Sign()*this->list->Size() < this->Sign()*that->list->Size();
+	if(this->sign != that->sign) return this->sign < that->sign;
+	if(this->list->Size() != that->list->Size()) return this->sign*this->list->Size() < that->sign*that->list->Size();
 	
 	Position* temp1 = this->list->Last();
 	Position* temp2 = that->list->Last();
 	
 	while(!this->list->IsFirst(temp1))
 	{
-		if(temp1->Value() != temp2->Value()) return this->Sign()*temp1->Value() < that->Sign()*temp2->Value();
+		if(temp1->Value() != temp2->Value()) return this->sign*temp1->Value() < that->sign*temp2->Value();
 		
 		temp1 = this->list->Before(temp1);
 		temp2 = that->list->Before(temp2);
 	}
-	return this->Sign()*temp1->Value() < that->Sign()*temp2->Value();
+	return this->sign*temp1->Value() < that->sign*temp2->Value();
 }
 
 LongInteger* LongInteger::Multiply(const LongInteger* that) const
