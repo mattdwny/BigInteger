@@ -132,7 +132,7 @@ bool DLLProjectList::IsLast(const Position* pos)
 {
 	DLLNode* node = dynamic_cast<DLLNode*>(pos);
 	
-		return node == tail;
+	return node == tail;
 }
 
 /**

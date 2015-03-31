@@ -5,12 +5,7 @@ Position::Position(int value)
 	m_value = value;
 }
 
-int Position::GetValue() const
+int Position::Value() const
 {
 	return m_value;
-}
-
-void Position::SetValue(int value)
-{
-	m_value = value;
 }

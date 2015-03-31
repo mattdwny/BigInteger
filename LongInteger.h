@@ -10,8 +10,7 @@ class LongInteger
 {
 private:
 	ProjectList* list;
-	enum Sign {NEGATIVE = 1, ZERO = 2, POSITIVE = 3};
-	Sign sign;
+	int sign;
 
 public:
 	LongInteger(const string&);
@@ -20,7 +19,7 @@ public:
 	LongInteger* Add(const LongInteger*) const;
 	LongInteger* Subtract(const LongInteger*) const;
 	LongInteger* Multiply(const LongInteger*) const;
-	LongInteger* Power(const int pow) const;
+	LongInteger* Power(const int) const;
 
 	int DigitCount() const;
 	

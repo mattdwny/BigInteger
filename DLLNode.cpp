@@ -6,10 +6,7 @@ DLLNode::DLLNode(int value, DLLNode* next, DLLNode* prev) : Position(value)
 	m_prev = prev;
 }
 
-DLLNode::~DLLNode()
-{
-
-}
+DLLNode::~DLLNode() { }
 
 void DLLNode::SetNext(const DLLNode* next) { m_next = next; }
 void DLLNode::SetPrev(const DLLNode* prev) { m_prev = prev; }

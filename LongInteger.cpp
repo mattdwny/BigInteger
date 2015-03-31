@@ -10,12 +10,12 @@ LongInteger::LongInteger(const string& str)
 	if(str.at(0) == '-')
 	{
 		first = 1;
-		sign = Sign::NEGATIVE;
+		sign = -1;
 	}
 	else //the string is positive
 	{
 		first = 0;
-		sign = Sign::POSITIVE;
+		sign = 1;
 	}
 	
 	size_t length = str.length() - first;
@@ -25,11 +25,21 @@ LongInteger::LongInteger(const string& str)
 	if(mod == 0) mod = 8;
 	
 	list.InsertFirst(str.substr(first, mod));
+	1,9
 	
-	for(size_t cursor = first + mod; i < length + first; cursor += 8)
+	for(size_t cursor = first + mod; i < str.length(); cursor += 8)
 	{
 		list.InsertLast(str.substr(i,8));
 	}
+}
+
+LongInteger::LongInteger(const LongInteger& ref)
+{
+	LongInteger* clone = new LongInteger();
+	
+	
+	
+	return clone;
 }
 
 LongInteger::~LongInteger()
@@ -39,6 +49,7 @@ LongInteger::~LongInteger()
 
 LongInteger* LongInteger::Add(const LongInteger* that) const
 {
+	//Only works for "+" + "+", but delegating work is a pro strat
 	Position* temp1 = this->list->Last();
 	Position* temp2 = that->list->Last();
 	
@@ -73,38 +84,100 @@ LongInteger* LongInteger::Add(const LongInteger* that) const
 	return sum;
 }
 
-int LongInteger::DigitCount() const
+void LongInteger::BlockOutput() const
 {
-
+	Position* temp = this->list->First();
+	
+	if(temp) printf("%08d", temp->Value());
+	
+	while(!this->list->IsLast(temp))
+	{
+		temp = this->list->After(temp);
+		printf(", %08d", temp->Value());
+	}
 }
 
-bool LongInteger::EqualTo(const LongInteger* i) const
+size_t LongInteger::DigitCount() const
+{
+	size_t size = this->list->Size() - 1;
+	if(size == -1) size = 0;
+	size *= 8; //Logic error: this can overflow
+	if(this->list->First() != NULL) size += UtilityOperations.Digits(this->list->First().GetValue());
+	return size; 
+}
+
+bool LongInteger::EqualTo(const LongInteger* that) const
 {
 	if(this->Size() != i->Size()) return false;
 	if(this->Sign() != i->Sign()) return false;
 	
-	Position* temp1 = this->list->
-	Position* temp2 =
-}
-
-bool LongInteger::GreaterThan(const LongInteger* i) const
-{
+	Position* temp1 = this->list->Last();
+	Position* temp2 = that->list->Last();
 	
+	while(!this->list->IsFirst(temp1))
+	{
+		if(temp1->Value() != temp2->Value()) return false;
+		
+		temp1 = this->list->Before(temp1);
+		temp2 = that->list->Before(temp2);
+	}
+	return temp1->Value() == temp2->Value();
 }
 
-bool LongInteger::LessThan(const LongInteger* i) const
+bool LongInteger::GreaterThan(const LongInteger* that) const
 {
+	if(this->Size() != i->Size()) return this->Size() > that->Size();
+	if(this->Size() != i->Size()) return this->Sign()*this->Size() > this->Sign()*that->Size();
+
+	Position* temp1 = this->list->Last();
+	Position* temp2 = that->list->Last();
 	
+	while(!this->list->IsFirst(temp1))
+	{
+		if(temp1->Value() != temp2->Value()) return this->Sign()*temp1->Value() > that->Sign()*temp2->Value();
+		
+		temp1 = this->list->Before(temp1);
+		temp2 = that->list->Before(temp2);
+	}
+	return this->Sign()*temp1->Value() > that->Sign()*temp2->Value();
 }
 
-LongInteger* LongInteger::Multiply(const LongInteger* i) const
+bool LongInteger::LessThan(const LongInteger* that) const
+{
+	if(this->Sign() != i->Sign()) return this->Sign() < that->Sign();
+	if(this->Size() != i->Size()) return this->Sign()*this->Size() < this->Sign()*that->Size();
+	
+	Position* temp1 = this->list->Last();
+	Position* temp2 = that->list->Last();
+	
+	while(!this->list->IsFirst(temp1))
+	{
+		if(temp1->Value() != temp2->Value()) return this->Sign()*temp1->Value() < that->Sign()*temp2->Value();
+		
+		temp1 = this->list->Before(temp1);
+		temp2 = that->list->Before(temp2);
+	}
+	return this->Sign()*temp1->Value() < that->Sign()*temp2->Value();
+}
+
+LongInteger* LongInteger::Multiply(const LongInteger* that) const
 {
 	
 }
 
 void LongInteger::Output() const
 {
+	if(this->Sign()) printf('-');
+	Position* temp = this->list->First();
 	
+	if(temp) printf("%d", temp->Value());
+	else 	 printf("0");
+	
+	while(!this->list->IsLast(temp))
+	{
+		temp = this->list->After(temp);
+		printf("%08d", temp->Value());
+	}
 }
 
 LongInteger* LongInteger::Power(const int p) const
@@ -114,12 +187,10 @@ LongInteger* LongInteger::Power(const int p) const
 
 bool LongInteger::Sign()
 {
-	if     (sign == Sign::NEGATIVE) return true;
-	else if(sign == Sign::POSITIVE) return false;
-	else 							return false;
+	return sign == -1;
 }
 
-LongInteger* LongInteger::Subtract(const LongInteger* i) const
+LongInteger* LongInteger::Subtract(const LongInteger* that) const
 {
 
 }

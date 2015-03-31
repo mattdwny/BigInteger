@@ -8,8 +8,7 @@ private:
 	
 public:
 	Position(int value);
-	int GetValue() const;
-	void SetValue(int value);
+	int Value() const;
 };
 
 #endif
