@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 			result->Output();
 			cout << endl;
 			
-			//delete result; //without a proper destructor this is pointless
+			delete result; //without a proper destructor this is pointless
 		}
 	}
 	
@@ -65,12 +65,11 @@ int main(int argc, char* argv[])
 			result->Output();
 			cout << endl;
 			
-			//delete result; //without a proper destructor this is pointless
+			delete result; //without a proper destructor this is pointless
 		}
 	}
 	
 	//For each Long Integer multiply it by every other Long Integer (one at a time) and print the result
-	/*
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
 	{
 		LongInteger* f = units[c1 - 97];
@@ -81,72 +80,87 @@ int main(int argc, char* argv[])
 			
 			LongInteger* result = f->Multiply(s);
 			
-			cout << c1 << " * " << c2 << endl;
+			//cout << c1 << " * " << c2 << endl;
 			result->Output();
 			cout << endl;
 			
-			//delete result; //without a proper destructor this is pointless
+			delete result; //without a proper destructor this is pointless
 		}
 	}
-	*/
-/*
-Compute the following (in alphabetical order):
-I
-= A + 
-D
-J
-= B + 
-C
-K
-= C + D
-L
-= 
-I
-+
-I
-M = A + I
-N
-= B + 
-K
-O = A 
-–
-D
-P
-= C 
-–
-D
-Q
-= D 
-–
-C
-R = L
-–
-L
-S
-= 
-P
-–
-O
-T
-= 
-N 
-–
-Q
-U = A * D
-V = B * C
-W
-= 
-D * D
-X
-= 
-O * I
-Y
-= 
-J * P
-Z 
-= M
-* N
-	*/
+
+	LongInteger* I = A.Add(&D);
+	LongInteger* J = B.Add(&C);
+	LongInteger* K = C.Add(&D);
+	LongInteger* L = I->Add(I);
+	LongInteger* M = A.Add(I);
+	LongInteger* N = B.Add(K);
+	LongInteger* O = A.Subtract(&D);
+	LongInteger* P = C.Subtract(&D);
+	LongInteger* Q = D.Subtract(&C);
+	LongInteger* R = L->Subtract(L);
+	LongInteger* S = P->Subtract(O);
+	LongInteger* T = N->Subtract(Q);
+	LongInteger* U = A.Multiply(&D);
+	LongInteger* V = B.Multiply(&C);
+	LongInteger* W = D.Multiply(&D);
+	LongInteger* X = O->Multiply(I);
+	LongInteger* Y = J->Multiply(P);
+	LongInteger* Z = M->Multiply(N);
 	
+	I->Output();
+	printf("\n");
+	J->Output();
+	printf("\n");
+	K->Output();
+	printf("\n");
+	L->Output();
+	printf("\n");
+	M->Output();
+	printf("\n");
+	N->Output();
+	printf("\n");
+	O->Output();
+	printf("\n");
+	P->Output();
+	printf("\n");
+	Q->Output();
+	printf("\n");
+	R->Output();
+	printf("\n");
+	S->Output();
+	printf("\n");
+	T->Output();
+	printf("\n");
+	U->Output();
+	printf("\n");
+	V->Output();
+	printf("\n");
+	W->Output();
+	printf("\n");
+	X->Output();
+	printf("\n");
+	Y->Output();
+	printf("\n");
+	Z->Output();
+	printf("\n");
+	
+	delete I;
+	delete J;
+	delete K;
+	delete L;
+	delete M;
+	delete N;
+	delete O;
+	delete P;
+	delete Q;
+	delete R;
+	delete S;
+	delete T;
+	delete U;
+	delete V;
+	delete W;
+	delete X;
+	delete Y;
+	delete Z;
 }
 

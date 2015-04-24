@@ -170,12 +170,16 @@ bool LongInteger::LessThan(const LongInteger* that) const
 
 LongInteger* LongInteger::Multiply(const LongInteger* that) const
 {
-	LongInteger* product = new LongInteger();
-	if(this->sign == 0 || that->sign == 0) return product;
+	LongInteger* product;
+	if(this->sign == 0 || that->sign == 0) return new LongInteger();
 	
-	//more stuff
+	if(this->UnsignedGreaterThan(that)) product = UnsignedMultiply(this, that);
+	else 								product = UnsignedMultiply(that, this);
 	
-	return 0;
+	product->sign = this->sign*that->sign;
+	product->StripZeros();
+	
+	return product;
 }
 
 void LongInteger::Output() const
@@ -211,7 +215,7 @@ void LongInteger::StripZeros()
 		else break;
 	}
 	
-	if(list->IsEmpty()) sign = 0; 
+	if(list->IsEmpty()) sign = 0;	
 }
 
 LongInteger* LongInteger::Subtract(const LongInteger* that) const
@@ -325,51 +329,62 @@ bool LongInteger::UnsignedGreaterThan(const LongInteger* that) const
 	return temp1->GetValue() > temp2->GetValue();
 }
 
-LongInteger* LongInteger::UnsignedMultiply(LongInteger* P, const LongInteger* A, const LongInteger* B) const
-{
-	int a1,a2;
-	int b1,b2;
-	int v1,v2;
-	int z1,z2,z3;
+LongInteger* LongInteger::UnsignedMultiply(const LongInteger* A, const LongInteger* B) const
+{	
+	LongInteger* P = new LongInteger();
+	Position* a = A->list->Last();
 	
 	int zeroPadding = 0;
-	int x = 10000;
-	
-	Position* a = A->list->Last();
-	Position* b = B->list->Last();
-	
-	LongInteger* product = new LongInteger();
- 
 	int i = A->list->Size();
 	while(i > 0)
 	{
+		Position* b = B->list->Last();
 		LongInteger* temp = new LongInteger();
-		for (int i = 0; i < zeroPadding; ++i) temp->list->InsertLast(0);
-
-		a1 = UpperHalf(a->GetValue());
-		a2 = LowerHalf(a->GetValue());
 		
+		for (int i = 0; i < zeroPadding; ++i) temp->list->InsertLast(0);
+		temp->list->InsertLast(0);
+
+		int a1 = UpperHalf(a->GetValue());
+		int a2 = LowerHalf(a->GetValue());
+		
+		int carry = 0;
 		int j = B->list->Size();
 		while(j > 0)
 		{			
-			b1 = UpperHalf(b->GetValue());
-			b2 = LowerHalf(b->GetValue());
+			int b1 = UpperHalf(b->GetValue());
+			int b2 = LowerHalf(b->GetValue());
 			
-			z1 = a1 * b1;
-			z3 = a2 * b2;
-			z2 = ( (a1 + a2) * (b1 + b2) ) - z1 - z3;
+			int z1 = a1 * b1;
+			int z3 = a2 * b2;
+			int z2 = (a1 + a2) * (b1 + b2) - z1 - z3;
 			
-			v1 = z1 + UpperHalf(z2);
-			v2 = z3 + (LowerHalf(z2) * x );
+			int v1 = z1 + UpperHalf(z2);
+			int v2 = z3 + (LowerHalf(z2) * 10000 ) + carry;
 			
-			temp->list->InsertFirst(v2);
+			carry = Overflow (v2);
+			v2    = Underflow(v2);
+			
+			temp->list->First()->SetValue(v2 + temp->list->First()->GetValue());
 			temp->list->InsertFirst(v1);
 			
 			if(--j) b = B->list->Before(b);
 		}
+		if(carry) temp->list->First()->SetValue(temp->list->First()->GetValue() + carry);
+		
+		LongInteger* sum = new LongInteger();
+		
+		UnsignedAdd(sum, P, temp);
+		
+		delete P;
+		delete temp;
+		
+		P = sum;
+		
 		++zeroPadding;
 		if(--i) a = A->list->Before(a);
 	}
+	
+	return P;
 }
 
 /**
