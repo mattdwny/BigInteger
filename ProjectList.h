@@ -7,7 +7,6 @@
 class ProjectList
 {
 public:
-
 	virtual ~ProjectList() { }
 
 	virtual Position* After(Position*) = 0;
@@ -26,6 +25,5 @@ public:
 
 	virtual size_t Size() const = 0;
 };
-
 
 #endif

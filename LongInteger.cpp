@@ -5,6 +5,12 @@
 #include "LongInteger.h"
 #include "UtilityOperations.h"
 
+LongInteger::LongInteger()
+{
+	this->list = new DLLProjectList();
+	sign = 0;
+}
+
 LongInteger::LongInteger(const string& str)
 {
 	// Do not change this line until Step 3
@@ -51,42 +57,28 @@ LongInteger::~LongInteger()
     delete this->list;
 }
 
-/*LongInteger* LongInteger::Add(const LongInteger* that) const
+LongInteger* LongInteger::Add(const LongInteger* that) const
 {
-	//Only works for "+" + "+", but delegating work is a pro strat
-	Position* temp1 = this->list->Last();
-	Position* temp2 = that->list->Last();
-	
-	size_t i = this->list->Size();
-	size_t j = that->list->Size();
-	
-	LongInteger* sum = new DLLProjectList();
-	
-	int carry = 0;
-	
-	while(carry || i || j)
+	LongInteger* sum;
+	if(this->sign == that->sign)
 	{
-		int value = carry;
-		if(i)
+		sum = UnsignedAdd(this, that);
+		sum->sign = this->sign;
+	}	
+	else
+	{
+		if(this->GreaterThan(that))
 		{
-			value += temp1->Value();
-			i -= 1;
-			if(i) temp1 = this->list->Before(temp1);
+			sum = UnsignedSubtract(this, that);
+			sum->sign = this->sign;
 		}
-		if(j)
+		else
 		{
-			value += temp2->Value();
-			j -= 1;
-			if(j) temp2 = that->list->Before(temp2);
+			sum = UnsignedSubtract(that, this);
+			sum->sign = that->sign;
 		}
-		carry = Overflow(value);
-		value = Underflow(value);
-		
-		sum->list->InsertFirst(value);
 	}
-	
-	return sum;
-}*/
+}
 
 void LongInteger::BlockOutput() const
 {
@@ -146,6 +138,23 @@ bool LongInteger::GreaterThan(const LongInteger* that) const
 	return this->sign*temp1->Value() > that->sign*temp2->Value();
 }
 
+bool LongInteger::UnsignedGreaterThan(const LongInteger* that) const
+{
+	if(this->list->Size() != that->list->Size()) return this->list->Size() > that->list->Size();
+
+	Position* temp1 = this->list->Last();
+	Position* temp2 = that->list->Last();
+	
+	while(!this->list->IsFirst(temp1))
+	{
+		if(temp1->Value() != temp2->Value()) return temp1->Value() > temp2->Value();
+		
+		temp1 = this->list->Before(temp1);
+		temp2 = that->list->Before(temp2);
+	}
+	return temp1->Value() > temp2->Value();
+}
+
 bool LongInteger::LessThan(const LongInteger* that) const
 {
 	if(this->sign != that->sign) return this->sign < that->sign;
@@ -196,5 +205,89 @@ bool LongInteger::Sign() const
 
 LongInteger* LongInteger::Subtract(const LongInteger* that) const
 {
+	if(this->sign != that->sign)
+	{
+		
+	}
+}
 
+//Only works for "+" + "+", but delegating work is a pro strat
+LongInteger* LongInteger::UnsignedAdd(const LongInteger* a, const LongInteger* b) const
+{
+	Position* temp1 = a->list->Last();
+	Position* temp2 = b->list->Last();
+	
+	size_t i = a->list->Size();
+	size_t j = b->list->Size();
+	
+	LongInteger* sum = new LongInteger();
+	
+	int carry = 0;
+	
+	while(carry || i || j)
+	{
+		int value = carry;
+		if(i)
+		{
+			value += temp1->Value();
+			i -= 1;
+			if(i) temp1 = a->list->Before(temp1);
+		}
+		if(j)
+		{
+			value += temp2->Value();
+			j -= 1;
+			if(j) temp2 = b->list->Before(temp2);
+		}
+		carry = Overflow(value);
+		value = Underflow(value);
+		
+		sum->list->InsertFirst(value);
+	}
+	
+	return sum;
+}
+
+LongInteger* LongInteger::UnsignedSubtract(const LongInteger* a, const LongInteger* b) const
+{
+	//Only works for "+" - "+", but delegating work is a pro strat
+	Position* temp1 = a->list->Last();
+	Position* temp2 = b->list->Last();
+	
+	size_t i = a->list->Size();
+	size_t j = b->list->Size();
+	
+	LongInteger* diff = new LongInteger();
+	
+	int borrow = 0;
+	
+	while(i || j)
+	{
+		int value = borrow;
+		if(i)
+		{
+			value += temp1->Value();
+			i -= 1;
+			if(i) temp1 = a->list->Before(temp1);
+		}
+		if(j)
+		{
+			value -= temp2->Value();
+			j -= 1;
+			if(j) temp2 = b->list->Before(temp2);
+		}
+		if(value < 0)
+		{
+			value += 100000000;
+			borrow = -1;
+		}
+		else
+		{
+			borrow = 0;
+		}
+		
+		diff->list->InsertFirst(value);
+	}
+	
+	return diff;
 }

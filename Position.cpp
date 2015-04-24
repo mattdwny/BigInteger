@@ -2,10 +2,15 @@
 
 Position::Position(int value)
 {
-	m_value = value;
+	mValue = value;
 }
 
-int Position::Value() const
+int Position::GetValue() const
 {
-	return m_value;
+	return mValue;
+}
+
+void Position::SetValue(int value)
+{
+	mValue = value;
 }

@@ -12,6 +12,8 @@ private:
 	DLLNode* tail;
 	size_t size;
 
+	void ClipZeros();
+	
 public:
 	DLLProjectList();
 	~DLLProjectList();

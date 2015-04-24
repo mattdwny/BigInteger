@@ -4,11 +4,12 @@
 class Position
 {
 private:
-	int m_value;
+	int mValue;
 	
 public:
 	Position(int value);
-	int Value() const;
+	int GetValue() const;
+	void SetValue(int value);
 };
 
 #endif
