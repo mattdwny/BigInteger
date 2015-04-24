@@ -9,7 +9,6 @@
 LongInteger::LongInteger()
 {
 	this->list = new DLLProjectList();
-	sign = 0;
 }
 
 LongInteger::LongInteger(const string& str)
@@ -63,22 +62,20 @@ LongInteger* LongInteger::Add(const LongInteger* that) const
 	LongInteger* sum = new LongInteger();
 	if(this->sign == that->sign)
 	{
-		UnsignedAdd(sum, this, that);
 		sum->sign = this->sign;
+		UnsignedAdd(sum, this, that);
 	}
 	else
 	{
 		if(this->UnsignedGreaterThan(that))
 		{
-			UnsignedSubtract(sum, this, that);
 			sum->sign = this->sign;
-			if(sum->list->Size() == 0) sum->sign = 0;
+			UnsignedSubtract(sum, this, that);
 		}
 		else
 		{
-			UnsignedSubtract(sum, that, this);
 			sum->sign = that->sign;
-			if(sum->list->Size() == 0) sum->sign = 0;
+			UnsignedSubtract(sum, that, this);
 		}
 	}
 	
@@ -96,6 +93,16 @@ void LongInteger::BlockOutput() const
 		temp = this->list->After(temp);
 		printf(", %08d", temp->GetValue());
 	}
+}
+
+LongInteger* LongInteger::Clone() const
+{
+	LongInteger* clone = new LongInteger();
+	
+	clone->list = this->list->Clone();
+	clone->sign = this->sign;
+	
+	return clone;
 }
 
 size_t LongInteger::DigitCount() const
@@ -163,7 +170,12 @@ bool LongInteger::LessThan(const LongInteger* that) const
 
 LongInteger* LongInteger::Multiply(const LongInteger* that) const
 {
+	LongInteger* product = new LongInteger();
+	if(this->sign == 0 || that->sign == 0) return product;
 	
+	//more stuff
+	
+	return 0;
 }
 
 void LongInteger::Output() const
@@ -191,32 +203,49 @@ bool LongInteger::Sign() const
 	return sign == -1;
 }
 
+void LongInteger::StripZeros()
+{
+	while(!list->IsEmpty())
+	{
+		if(list->First()->GetValue() == 0) list->RemoveFirst();
+		else break;
+	}
+	
+	if(list->IsEmpty()) sign = 0; 
+}
+
 LongInteger* LongInteger::Subtract(const LongInteger* that) const
 {
-	LongInteger* difference = new LongInteger();
+	LongInteger* difference;
+	
+	if (that->sign == 0) return this->Clone();
+	
+	if (this->sign == 0)
+	{
+		difference = that->Clone();
+		difference->sign *= -1;
+		return difference;
+	}
+	
+	difference = new LongInteger();
 	
 	if(this->sign == that->sign)
 	{
 		if(this->UnsignedGreaterThan(that))
 		{
-			UnsignedSubtract(difference, this, that);
 			difference->sign = this->sign;
-			if(difference->list->Size() == 0) difference->sign = 0;
+			UnsignedSubtract(difference, this, that);
 		}
 		else
 		{
-			UnsignedSubtract(difference, that, this);
 			difference->sign = -that->sign;
-			if(difference->list->Size() == 0) difference->sign = 0;
+			UnsignedSubtract(difference, that, this);
 		}
 	}
 	else
 	{
+		difference->sign = this->sign;
 		UnsignedAdd(difference, this, that);
-		
-		if	   (that->sign == -1) difference->sign = 1;
-		else if(this->sign == -1) difference->sign = -1;
-		else 					  difference->sign = fmax(this->sign, that->sign);
 	}
 	
 	return difference;
@@ -228,24 +257,34 @@ LongInteger* LongInteger::Subtract(const LongInteger* that) const
  *	@param B: the pointer to the smaller LongInteger (can be equal to A) 
  */
 LongInteger* LongInteger::UnsignedAdd(LongInteger* S, const LongInteger* A, const LongInteger* B) const
+{	
+	return UnsignedArithmetic(S,A,B,true);
+}
+
+/**
+ *	@param C: the pointer to an initialized LongInteger that will store the result
+ *	@param A: the pointer to the larger LongInteger (for subtraction)
+ *	@param B: the pointer to the smaller LongInteger (can be equal to A)
+ * 	@param add: true if the function should add, false if the program should subtract 
+ */
+LongInteger* LongInteger::UnsignedArithmetic(LongInteger* C, const LongInteger* A, const LongInteger* B, bool add) const
 {
-	Position* s = S->list->Last();
+	Position* c = C->list->Last();
 	Position* a = A->list->Last();
 	Position* b = B->list->Last();
 	
-	size_t i = S->list->Size();
+	size_t i = C->list->Size();
 	size_t j = A->list->Size();
 	size_t k = B->list->Size();
 	
 	int carry = 0;
-	
 	while(carry || i || j || k)
 	{
 		int value = carry;
 		if(i)
 		{
-			value += s->GetValue();
-			if(--i) s = S->list->Before(s);
+			value += c->GetValue();
+			if(--i) c = C->list->Before(c);
 		}
 		if(j)
 		{
@@ -254,18 +293,19 @@ LongInteger* LongInteger::UnsignedAdd(LongInteger* S, const LongInteger* A, cons
 		}
 		if(k)
 		{
-			value += b->GetValue();
+			if(add) value += b->GetValue();
+			else 	value -= b->GetValue();
 			if(--k) b = B->list->Before(b);
 		}
 		
 		carry = Overflow(value);
 		value = Underflow(value);
 		
-		if(i) s->SetValue(value);
-		else  S->list->InsertFirst(value);
+		if(i) c->SetValue(value);
+		else  C->list->InsertFirst(value);
 	}
 	
-	return S;
+	return C;
 }
 
 bool LongInteger::UnsignedGreaterThan(const LongInteger* that) const
@@ -339,40 +379,7 @@ LongInteger* LongInteger::UnsignedMultiply(LongInteger* P, const LongInteger* A,
  */
 LongInteger* LongInteger::UnsignedSubtract(LongInteger* D, const LongInteger* A, const LongInteger* B) const
 {
-	Position* d = D->list->Last();
-	Position* a = A->list->Last();
-	Position* b = B->list->Last();
-	
-	size_t i = D->list->Size();
-	size_t j = A->list->Size();
-	size_t k = B->list->Size();
-	
-	int borrow = 0;
-	while(i || j || k)
-	{
-		int value = borrow;
-		if(i)
-		{
-			value += d->GetValue();
-			if(--i) d = D->list->Before(d);
-		}
-		if(j)
-		{
-			value += a->GetValue();
-			if(--j) a = A->list->Before(a);
-		}
-		if(k)
-		{
-			value -= b->GetValue();
-			if(--k) b = B->list->Before(b);
-		}
-		
-		borrow = Overflow(value);
-		value  = Underflow(value);
-		
-		if(i) d->SetValue(value);
-		else  D->list->InsertFirst(value);
-	}
-	
+	UnsignedArithmetic(D,A,B,false);
+	D->StripZeros();
 	return D;
 }

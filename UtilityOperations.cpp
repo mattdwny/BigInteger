@@ -37,7 +37,7 @@ int LowerHalf(int val)
  */
 int Overflow(int val)
 {
-	if(val >= 0) return val / 100000000;
+	if(val >= 0 || val % 100000000 == 0) return val / 100000000;
 	
 	return val / 100000000 - 1;
 }
@@ -50,7 +50,7 @@ int Overflow(int val)
  */
 int Underflow(int val)
 {
-	if(val >= 0) return val % 100000000;
+	if(val >= 0 || val % 100000000 == 0) return val % 100000000;
 
 	return val % 100000000 + 100000000;
 }

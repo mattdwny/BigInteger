@@ -10,6 +10,8 @@ DLLProjectList::DLLProjectList()
 DLLProjectList::~DLLProjectList()
 {
 	//iterator that deletes all nodes
+	while(!IsEmpty())
+		RemoveFirst();
 }
 
 /**
@@ -46,6 +48,25 @@ Position* DLLProjectList::Before(Position* pos)
 	}
 	
 	return node->GetPrev();
+}
+
+/**
+ * Returns a clone of the 
+ *
+ * @return a pointer to a clone of the instance (matching sign and chunk values) 
+ */
+DLLProjectList* DLLProjectList::Clone() const
+{
+	DLLProjectList* clone = new DLLProjectList();
+	DLLNode* iter = head;
+	
+	while(!IsLast(iter))
+	{
+		clone->InsertLast(iter->GetValue());
+	}
+	if(!IsEmpty()) clone->InsertLast(iter->GetValue());
+	
+	return clone;
 }
 
 /**
@@ -144,6 +165,34 @@ bool DLLProjectList::IsLast(Position* pos) const
 Position* DLLProjectList::Last()
 {
 	return tail;
+}
+
+/**
+ * Remove the first node in the list 
+ */
+void DLLProjectList::RemoveFirst()
+{
+	if(head == NULL)
+	{
+		throw std::invalid_argument("DLLProjectList-RemoveFirst: cannot remove the head of a null list");
+	}
+	else
+	{
+		DLLNode* first = head;
+		
+		if(!IsLast(first))
+		{
+			head = static_cast<DLLNode*>(this->After(first));
+			head->SetPrev(NULL);
+		}
+		else
+		{
+			head = tail = NULL;
+		}
+		
+		delete first;
+		--size;
+	}
 }
 
 /**

@@ -20,8 +20,11 @@ public:
 
 	Position* After(Position*);
 	Position* Before(Position*);
+	
+	DLLProjectList* Clone() const;
 
 	Position* First();
+	Position* Last();
 
 	void InsertFirst(int);
 	void InsertLast(int);
@@ -30,8 +33,8 @@ public:
 
 	bool IsFirst(Position*) const;
 	bool IsLast(Position*) const;
-
-	Position* Last();
+	
+	void RemoveFirst();
 
 	size_t Size() const;
 };

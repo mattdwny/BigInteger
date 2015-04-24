@@ -11,7 +11,9 @@ class LongInteger
 private:
 	ProjectList* list;
 	int sign;
-
+		
+	void StripZeros();
+	LongInteger* UnsignedArithmetic(LongInteger* C, const LongInteger* A, const LongInteger* B, bool add) const;
 public:
 	LongInteger();
 	LongInteger(const string&);
@@ -21,6 +23,8 @@ public:
 	LongInteger* Subtract(const LongInteger*) const;
 	LongInteger* Multiply(const LongInteger*) const;
 	LongInteger* Power(const int) const;
+	
+	LongInteger* Clone() const;
 
 	void BlockOutput() const;
 	void Output() const;
