@@ -119,5 +119,175 @@ int main(int argc, char* argv[])
 			cout << f->GreaterThan(s) << endl;
 		}
 	}
+	
+	/**
+	 * Begin Part 2222
+	 */
+	 
+	/**
+	 * Begin Step 1
+	 */
+	 
+	 //For each Long Integer add it to every other Long Integer (one at a time) and print the result
+	for(char c1 = 'a'; c1 <= 'h'; ++c1)
+	{
+		LongInteger* f = units[c1 - 97];
+		
+		for(char c2 = 'a'; c2 <= 'h'; ++c2)
+		{
+			LongInteger* s = units[c2 - 97];
+			
+			LongInteger* result = f->Add(s);
+			
+			cout << c1 << " + " << c2 << endl;
+			result->Output();
+			cout << endl;
+			
+			delete result; //without a proper destructor this is pointless
+		}
+	}
+	 
+	 /**
+	 * Begin Step 2
+	 */
+
+	//For  each  Long  Integer  subtract  it  from  every  other  Long  Integer  (one  at  a  time)  and  print  the results
+	for(char c1 = 'a'; c1 <= 'h'; ++c1)
+	{
+		LongInteger* f = units[c1 - 97];
+		
+		for(char c2 = 'a'; c2 <= 'h'; ++c2)
+		{
+			LongInteger* s = units[c2 - 97];
+			
+			LongInteger* result = f->Subtract(s);
+			
+			cout << c1 << " - " << c2 << endl;
+			result->Output();
+			cout << endl;
+			
+			delete result; //without a proper destructor this is pointless
+		}
+	}
+	
+	 /**
+	 * Begin Step 3
+	 */
+	
+	//For each Long Integer multiply it by every other Long Integer (one at a time) and print the result
+	for(char c1 = 'a'; c1 <= 'h'; ++c1)
+	{
+		LongInteger* f = units[c1 - 97];
+		
+		for(char c2 = 'a'; c2 <= 'h'; ++c2)
+		{
+			LongInteger* s = units[c2 - 97];
+			
+			LongInteger* result = f->Multiply(s);
+			
+			cout << c1 << " * " << c2 << endl;
+			result->Output();
+			cout << endl;
+			
+			delete result; //without a proper destructor this is pointless
+		}
+	}
+	
+	 /**
+	 * Begin Step 4
+	 */	 
+	 
+	LongInteger* I = A.Add(&D);
+	LongInteger* J = B.Add(&C);
+	LongInteger* K = C.Add(&D);
+	LongInteger* L = I->Add(I);
+	LongInteger* M = A.Add(I);
+	LongInteger* N = B.Add(K);
+	LongInteger* O = A.Subtract(&D);
+	LongInteger* P = C.Subtract(&D);
+	LongInteger* Q = D.Subtract(&C);
+	LongInteger* R = L->Subtract(L);
+	LongInteger* S = P->Subtract(O);
+	LongInteger* T = N->Subtract(Q);
+	LongInteger* U = A.Multiply(&D);
+	LongInteger* V = B.Multiply(&C);
+	LongInteger* W = D.Multiply(&D);
+	LongInteger* X = O->Multiply(I);
+	LongInteger* Y = J->Multiply(P);
+	LongInteger* Z = M->Multiply(N);
+	
+	printf("I = ");
+	I->Output();
+	printf("\n");
+	printf("J = ");
+	J->Output();
+	printf("\n");
+	printf("K = ");
+	K->Output();
+	printf("\n");
+	printf("L = ");
+	L->Output();
+	printf("\n");
+	printf("M = ");
+	M->Output();
+	printf("\n");
+	printf("N = ");
+	N->Output();
+	printf("\n");
+	printf("O = ");
+	O->Output();
+	printf("\n");
+	printf("P = ");
+	P->Output();
+	printf("\n");
+	printf("Q = ");
+	Q->Output();
+	printf("\n");
+	printf("R = ");
+	R->Output();
+	printf("\n");
+	printf("S = ");
+	S->Output();
+	printf("\n");
+	printf("T = ");
+	T->Output();
+	printf("\n");
+	printf("U = ");
+	U->Output();
+	printf("\n");
+	printf("V = ");
+	V->Output();
+	printf("\n");
+	printf("W = ");
+	W->Output();
+	printf("\n");
+	printf("X = ");
+	X->Output();
+	printf("\n");
+	printf("Y = ");
+	Y->Output();
+	printf("\n");
+	printf("Z = ");
+	Z->Output();
+	printf("\n");
+	
+	delete I;
+	delete J;
+	delete K;
+	delete L;
+	delete M;
+	delete N;
+	delete O;
+	delete P;
+	delete Q;
+	delete R;
+	delete S;
+	delete T;
+	delete U;
+	delete V;
+	delete W;
+	delete X;
+	delete Y;
+	delete Z;
 }
 
