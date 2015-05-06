@@ -19,9 +19,9 @@ public:
 	LongInteger(const string&);
 	~LongInteger();
 
-	LongInteger* Add(const LongInteger*) const;
-	LongInteger* Subtract(const LongInteger*) const;
-	LongInteger* Multiply(const LongInteger*) const;
+	LongInteger* Add     (const LongInteger* const) const;
+	LongInteger* Subtract(const LongInteger* const) const;
+	LongInteger* Multiply(const LongInteger* const) const;
 	LongInteger* Power(const int) const;
 	
 	LongInteger* Clone() const;
@@ -31,17 +31,19 @@ public:
 	
 	size_t DigitCount() const;
 	
-	bool EqualTo(const LongInteger *) const;
-	bool LessThan(const LongInteger*) const;
-	bool GreaterThan(const LongInteger*) const;
+	bool EqualTo    (const LongInteger* const) const;
+	bool LessThan   (const LongInteger* const) const;
+	bool GreaterThan(const LongInteger* const) const;
 	
 	bool Sign() const;
 	
-	LongInteger* UnsignedAdd     (LongInteger* S, const LongInteger* A, const LongInteger* B) const;
-	LongInteger* UnsignedMultiply(				  const LongInteger* A, const LongInteger* B) const;
-	LongInteger* UnsignedSubtract(LongInteger* D, const LongInteger* A, const LongInteger* B) const;
-
-	bool UnsignedGreaterThan(const LongInteger* that) const;
+	LongInteger* UnsignedAdd     (LongInteger* const, const LongInteger* const, const LongInteger* const) const;
+	LongInteger* UnsignedMultiply(LongInteger* const, const LongInteger* const, const LongInteger* const) const;
+	LongInteger* UnsignedSubtract(LongInteger* const, const LongInteger* const, const LongInteger* const) const;
+	
+	LongInteger* UnsignedAggregate(LongInteger* const, const LongInteger* const) const;
+	
+	bool UnsignedGreaterThan(const LongInteger* const that) const;
 };
 
 #endif // LONGINTEGER_H
