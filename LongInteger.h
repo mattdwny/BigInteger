@@ -42,6 +42,8 @@ public:
 	LongInteger* UnsignedSubtract(LongInteger* const, const LongInteger* const, const LongInteger* const) const;
 	
 	LongInteger* UnsignedAggregate(LongInteger* const, const LongInteger* const) const;
+
+	LongInteger* UnsignedPower(const LongInteger* const x, const int p) const;
 	
 	bool UnsignedGreaterThan(const LongInteger* const that) const;
 };

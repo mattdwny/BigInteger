@@ -203,8 +203,8 @@ void LongInteger::Output() const
 }
 
 LongInteger* LongInteger::Power(const int p) const
-{
-
+{	
+	UnsignedPower(this, p);
 }
 
 bool LongInteger::Sign() const
@@ -267,7 +267,12 @@ LongInteger* LongInteger::Subtract(const LongInteger* const that) const
  */
 LongInteger* LongInteger::UnsignedAdd(LongInteger* const C, const LongInteger* const A, const LongInteger* const B) const
 {	
-	return UnsignedArithmetic(C,A,B,true);
+	return UnsignedArithmetic(C, A, B, true);
+}
+
+LongInteger* LongInteger::UnsignedAggregate(LongInteger* const A, const LongInteger* const B) const
+{
+	return UnsignedArithmetic(A, A, B, true);
 }
 
 /**
@@ -390,9 +395,20 @@ LongInteger* LongInteger::UnsignedMultiply(LongInteger* const C, const LongInteg
 	return C;
 }
 
-LongInteger* LongInteger::UnsignedAggregate(LongInteger* const A, const LongInteger* const B) const
+LongInteger* LongInteger::UnsignedPower(const LongInteger* const x, const int p) const
 {
-	return UnsignedArithmetic(A, A, B, true);
+	if(p == 1) return x->Clone();
+	
+	LongInteger* odd  = UnsignedPower(x, p/2);
+	LongInteger* even = odd->Multiply(odd);
+	delete odd;
+	if(p % 2 == 1)
+	{
+		odd  = even->Multiply(this);
+		delete even;
+		return odd;
+	}
+	return even;
 }
 
 /**

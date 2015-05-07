@@ -1,3 +1,4 @@
+#include <ctime>
 #include <stdio.h>
 #include <iostream>
 #include "LongInteger.h"
@@ -6,12 +7,16 @@
 using namespace std;
 
 LongInteger* units[8];
+clock_t start;
 
 int main(int argc, char* argv[])
 {
+
 	/**
 	 * Begin Step 1
 	 */
+
+	start = clock();
 	 
 	LongInteger* A = new LongInteger("2222");
 	LongInteger* B = new LongInteger("99999999");
@@ -32,9 +37,13 @@ int main(int argc, char* argv[])
 	units[6] = G;
 	units[7] = H;
 	
+	printf("Part 1, Step 1 took %i clock ticks\n", clock() - start);
+	
 	/**
 	 * Begin Step 2
 	 */
+	
+	start = clock();
 	
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
 	{
@@ -47,9 +56,13 @@ int main(int argc, char* argv[])
 	
 	cout << endl;
 	
+	printf("Part 1, Step 2 took %i clock ticks\n", clock() - start);
+	
 	/**
 	 * Begin Step 3
 	 */
+	
+	start = clock();
 	
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
 	{
@@ -62,9 +75,13 @@ int main(int argc, char* argv[])
 	
 	cout << endl;
 	
+	printf("Part 1, Step 3 took %i clock ticks\n", clock() - start);
+	
 	/**
 	 * Begin Step 4
 	 */
+	
+	start = clock();
 	
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
 	{
@@ -74,9 +91,13 @@ int main(int argc, char* argv[])
 	
 	cout << endl;
 	
+	printf("Part 1, Step 4 took %i clock ticks\n", clock() - start);
+	
 	/**
 	 * Begin Step 5
 	 */
+	
+	start = clock();
 	
 	int a = 2222;
 	int b = 99999999;
@@ -97,9 +118,13 @@ int main(int argc, char* argv[])
 	
 	cout << endl;
 	
+	printf("Part 1, Step 5 took %i clock ticks\n", clock() - start);
+	
 	/**
 	 * Begin Step 6
 	 */
+	
+	start = clock();
 	
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
 	{
@@ -120,13 +145,17 @@ int main(int argc, char* argv[])
 		}
 	}
 	
+	printf("Part 1, Step 6 took %i clock ticks\n", clock() - start);
+	
 	/**
-	 * Begin Part 2222
+	 * Begin Part 2.0
 	 */
 	 
 	/**
 	 * Begin Step 1
 	 */
+	 
+	start = clock();
 	 
 	 //For each Long Integer add it to every other Long Integer (one at a time) and print the result
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
@@ -147,10 +176,14 @@ int main(int argc, char* argv[])
 		}
 	}
 	 
-	 /**
+	printf("Part 2, Step 1 took %i clock ticks\n", clock() - start);
+	 
+	/**
 	 * Begin Step 2
 	 */
 
+	start = clock();
+	 
 	//For  each  Long  Integer  subtract  it  from  every  other  Long  Integer  (one  at  a  time)  and  print  the results
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
 	{
@@ -170,9 +203,13 @@ int main(int argc, char* argv[])
 		}
 	}
 	
-	 /**
+	printf("Part 2, Step 2 took %i clock ticks\n", clock() - start);
+	
+	/**
 	 * Begin Step 3
 	 */
+	
+	start = clock();
 	
 	//For each Long Integer multiply it by every other Long Integer (one at a time) and print the result
 	for(char c1 = 'a'; c1 <= 'h'; ++c1)
@@ -193,9 +230,13 @@ int main(int argc, char* argv[])
 		}
 	}
 	
-	 /**
+	printf("Part 2, Step 3 took %i clock ticks\n", clock() - start);
+	
+	/**
 	 * Begin Step 4
 	 */	 
+	
+	start = clock();
 	 
 	LongInteger* I = A->Add     (D);
 	LongInteger* J = B->Add     (C);
@@ -297,5 +338,38 @@ int main(int argc, char* argv[])
 	delete X;
 	delete Y;
 	delete Z;
+	
+	printf("Part 2, Step 4 took %i clock ticks\n", clock() - start);
+	
+	/**
+	 *  Begin Part 3.0
+	 */
+	
+	/**
+	 * Begin Step 1
+	 */
+
+	start = clock();
+	 
+	int arr[] = {2, 5, 10, 25};
+	 
+	//For  each  Long  Integer  raise it to the 2, 5, 10, and 25th powers
+	for(char c1 = 'a'; c1 <= 'h'; ++c1)
+	{
+		LongInteger* f = units[c1 - 97];
+		
+		for(int i = 0; i < 4; ++i)
+		{
+			LongInteger* result = f->Power(arr[i]);
+		
+			cout << c1 << " ** " << arr[i] << endl;
+			result->Output();
+			cout << endl;
+		
+			delete result; //without a proper destructor this is pointless
+		}
+	}
+	
+	printf("Part 3, Step 1 took %i clock ticks\n", clock() - start);
 }
 

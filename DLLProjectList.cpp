@@ -59,7 +59,7 @@ DLLProjectList* DLLProjectList::Clone() const
 {
 	DLLProjectList* clone = new DLLProjectList();
 	DLLNode* iter = head;
-	
+		
 	while(!IsLast(iter))
 	{
 		clone->InsertLast(iter->GetValue());
