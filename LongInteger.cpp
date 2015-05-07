@@ -46,12 +46,14 @@ LongInteger::LongInteger(const string& str)
 	list->InsertFirst(atoi(str.substr(first, mod).c_str()));
 }
 
-LongInteger::LongInteger(const LongInteger& ref)
+LongInteger::LongInteger(const LongInteger* const ref)
 {	
-	DLLProjectList* li = dynamic_cast<DLLProjectList*>(ref.list);
-
-	list = new DLLProjectList(*li);
-	sign = ref.sign;
+	printf("this works\n");
+	DLLProjectList* refList = static_cast<DLLProjectList*>(ref->list);
+	printf("this works\n");
+	list = new DLLProjectList(refList);
+	printf("this works\n");
+	sign = ref->sign;
 }
 
 LongInteger::~LongInteger()
@@ -216,11 +218,11 @@ LongInteger* LongInteger::Subtract(const LongInteger* const that) const
 {
 	LongInteger* difference;
 	
-	if (that->sign == 0) return new LongInteger(*this);
+	if (that->sign == 0) return new LongInteger(this);
 	
 	if (this->sign == 0)
 	{
-		difference = new LongInteger(*that);
+		difference = new LongInteger(that);
 		difference->sign *= -1;
 		return difference;
 	}
@@ -386,7 +388,10 @@ LongInteger* LongInteger::UnsignedMultiply(LongInteger* const C, const LongInteg
 
 LongInteger* LongInteger::UnsignedPower(const LongInteger* const x, const int p) const
 {
-	if(p == 1) return new LongInteger(*x);
+	printf("%x\n",x);
+	printf("%i\n",p);
+
+	if(p == 1) return new LongInteger(x);
 	
 	LongInteger* odd  = UnsignedPower(x, p/2);
 	LongInteger* even = odd->Multiply(odd);

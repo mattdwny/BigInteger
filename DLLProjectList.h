@@ -16,7 +16,7 @@ private:
 	
 public:
 	DLLProjectList();
-	DLLProjectList(const DLLProjectList&);
+	DLLProjectList(const DLLProjectList* const);
 	~DLLProjectList();
 
 	Position* After (Position*) const;
@@ -24,6 +24,11 @@ public:
 	
 	Position* First() const;
 	Position* Last() const;
+	
+	DLLNode* GetHead() const { return head; }
+	DLLNode* GetTail() const { return tail; }
+	
+	size_t GetSize() const { return size; }
 
 	void InsertFirst(int);
 	void InsertLast(int);

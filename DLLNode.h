@@ -11,6 +11,8 @@ private:
 
 public:
 	DLLNode(int, DLLNode*, DLLNode*);
+	DLLNode(const DLLNode* const node);
+
 	~DLLNode();
 
 	DLLNode* GetNext() const;

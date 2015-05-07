@@ -17,7 +17,7 @@ private:
 public:
 	LongInteger();
 	LongInteger(const string&);
-	LongInteger(const LongInteger& ref);
+	LongInteger(const LongInteger* const ref);
 	~LongInteger();
 
 	LongInteger* Add     (const LongInteger* const) const;

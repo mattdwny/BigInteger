@@ -8,21 +8,44 @@ DLLProjectList::DLLProjectList()
 	head = tail = NULL;
 }
 
-DLLProjectList::DLLProjectList(const DLLProjectList& ref)
+DLLProjectList::DLLProjectList(const DLLProjectList* const ref)
 {
-	size = ref.size;
-	head = ref.head;
-	tail = ref.tail;
+	printf("DLL Working\n");
+
+	size = ref->size;
+	/*printf("%i\n",size);
+	printf("DLL Working\n");
+	int x = ref->head->GetValue();
+	printf("%i\n",x);
+	printf("DLL Working\n");
+	DLLNode* n = ref->head->GetNext();
+	printf("%x\n",n);
+	printf("DLL Working\n");
+	DLLNode* p = ref->head->GetPrev();
+	printf("%x\n",p);
+	printf("DLL Working\n");*/
 	
-	if(!ref.IsEmpty())
+	head = new DLLNode(ref->head);
+	tail = new DLLNode(ref->tail);
+	
+	printf("DLL Working\n");
+	
+	if(ref->tail != NULL) //hard-coded because we cannot use other member's inline functions
 	{
-		Position* iter = ref.Last();
-		
-		while(!ref.IsFirst(iter))
+		DLLNode* iter = ref->tail;
+	
+		printf("DLL Working\n");
+	
+		while(iter != ref->head)
 		{
+			printf("DLL Working\n");
 			InsertFirst(iter->GetValue());
-			iter = ref.Before(iter);
+			printf("DLL Working\n");
+			iter = iter->GetPrev();
 		}
+		
+		printf("DLL Working\n");
+		
 		InsertFirst(iter->GetValue());
 	}
 }

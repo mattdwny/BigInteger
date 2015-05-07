@@ -6,6 +6,12 @@ DLLNode::DLLNode(int value, DLLNode* next, DLLNode* prev) : Position(value)
 	m_prev = prev;
 }
 
+DLLNode::DLLNode(const DLLNode* const node) : Position(node->GetValue())
+{
+	m_next = node->GetNext();
+	m_prev = node->GetPrev();
+}
+
 DLLNode::~DLLNode() { }
 
 DLLNode* DLLNode::GetNext() const { return m_next; }
