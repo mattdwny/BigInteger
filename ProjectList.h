@@ -11,8 +11,6 @@ public:
 
 	virtual Position* After(Position*) = 0;
 	virtual Position* Before(Position*) = 0;
-
-	virtual ProjectList* Clone() const = 0;
 	
 	virtual Position* First() = 0;
 	virtual Position* Last() = 0;

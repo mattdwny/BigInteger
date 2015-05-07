@@ -13,8 +13,8 @@ public:
 	DLLNode(int, DLLNode*, DLLNode*);
 	~DLLNode();
 
-	DLLNode* GetNext();
-	DLLNode* GetPrev();
+	DLLNode* GetNext() const;
+	DLLNode* GetPrev() const;
 
 	void SetNext(DLLNode* next);
 	void SetPrev(DLLNode* prev);

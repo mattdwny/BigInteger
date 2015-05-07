@@ -16,13 +16,12 @@ private:
 	
 public:
 	DLLProjectList();
+	DLLProjectList(const DLLProjectList&);
 	~DLLProjectList();
 
-	Position* After(Position*);
+	Position* After (Position*);
 	Position* Before(Position*);
 	
-	DLLProjectList* Clone() const;
-
 	Position* First();
 	Position* Last();
 

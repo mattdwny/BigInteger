@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
 			result->Output();
 			cout << endl;
 			
-			delete result; //without a proper destructor this is pointless
+			delete result;
 		}
 	}
 	 
@@ -199,7 +199,7 @@ int main(int argc, char* argv[])
 			result->Output();
 			cout << endl;
 			
-			delete result; //without a proper destructor this is pointless
+			delete result;
 		}
 	}
 	
@@ -226,7 +226,7 @@ int main(int argc, char* argv[])
 			result->Output();
 			cout << endl;
 			
-			delete result; //without a proper destructor this is pointless
+			delete result;
 		}
 	}
 	
@@ -366,7 +366,7 @@ int main(int argc, char* argv[])
 			result->Output();
 			cout << endl;
 		
-			delete result; //without a proper destructor this is pointless
+			delete result;
 		}
 	}
 	

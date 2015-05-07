@@ -17,14 +17,13 @@ private:
 public:
 	LongInteger();
 	LongInteger(const string&);
+	LongInteger(const LongInteger& ref);
 	~LongInteger();
 
 	LongInteger* Add     (const LongInteger* const) const;
 	LongInteger* Subtract(const LongInteger* const) const;
 	LongInteger* Multiply(const LongInteger* const) const;
 	LongInteger* Power(const int) const;
-	
-	LongInteger* Clone() const;
 
 	void BlockOutput() const;
 	void Output() const;

@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <stdexcept>
 #include "DLLProjectList.h"
 
@@ -5,6 +6,25 @@ DLLProjectList::DLLProjectList()
 {
 	size = 0;
 	head = tail = NULL;
+}
+
+DLLProjectList::DLLProjectList(const DLLProjectList& ref)
+{
+	size = ref.size;
+	head = ref.head;
+	tail = ref.tail;
+	
+	if(!ref.IsEmpty())
+	{
+		const DLLNode* iter = ref.tail;
+		
+		while(ref.head != iter)
+		{
+			InsertFirst(iter->GetValue());
+			iter = iter->GetPrev();
+		}
+		InsertFirst(iter->GetValue());
+	}
 }
 
 DLLProjectList::~DLLProjectList()
@@ -25,9 +45,7 @@ Position* DLLProjectList::After(Position* pos)
 	DLLNode* node = static_cast<DLLNode*>(pos);
 	
 	if(node == tail)
-	{
 		throw std::invalid_argument("DLLProjectList-After: cannot call After on tail of list");
-	}
 	
 	return node->GetNext();
 }
@@ -43,30 +61,9 @@ Position* DLLProjectList::Before(Position* pos)
 	DLLNode* node = static_cast<DLLNode*>(pos);
 	
 	if(node == head)
-	{
 		throw std::invalid_argument("DLLProjectList-Before: cannot call Before on head of list");
-	}
 	
 	return node->GetPrev();
-}
-
-/**
- * Returns a clone of the 
- *
- * @return a pointer to a clone of the instance (matching sign and chunk values) 
- */
-DLLProjectList* DLLProjectList::Clone() const
-{
-	DLLProjectList* clone = new DLLProjectList();
-	DLLNode* iter = head;
-		
-	while(!IsLast(iter))
-	{
-		clone->InsertLast(iter->GetValue());
-	}
-	if(!IsEmpty()) clone->InsertLast(iter->GetValue());
-	
-	return clone;
 }
 
 /**
