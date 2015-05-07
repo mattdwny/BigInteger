@@ -9,11 +9,11 @@ class ProjectList
 public:
 	virtual ~ProjectList() { }
 
-	virtual Position* After(Position*) = 0;
-	virtual Position* Before(Position*) = 0;
+	virtual Position* After(Position*) const = 0;
+	virtual Position* Before(Position*) const = 0;
 	
-	virtual Position* First() = 0;
-	virtual Position* Last() = 0;
+	virtual Position* First() const = 0;
+	virtual Position* Last() const = 0;
 
 	virtual void InsertFirst(int) = 0;
 	virtual void InsertLast(int) = 0;

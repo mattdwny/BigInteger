@@ -19,11 +19,11 @@ public:
 	DLLProjectList(const DLLProjectList&);
 	~DLLProjectList();
 
-	Position* After (Position*);
-	Position* Before(Position*);
+	Position* After (Position*) const;
+	Position* Before(Position*) const;
 	
-	Position* First();
-	Position* Last();
+	Position* First() const;
+	Position* Last() const;
 
 	void InsertFirst(int);
 	void InsertLast(int);

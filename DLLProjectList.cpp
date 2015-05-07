@@ -16,12 +16,12 @@ DLLProjectList::DLLProjectList(const DLLProjectList& ref)
 	
 	if(!ref.IsEmpty())
 	{
-		const DLLNode* iter = ref.tail;
+		Position* iter = ref.Last();
 		
-		while(ref.head != iter)
+		while(!ref.IsFirst(iter))
 		{
 			InsertFirst(iter->GetValue());
-			iter = iter->GetPrev();
+			iter = ref.Before(iter);
 		}
 		InsertFirst(iter->GetValue());
 	}
@@ -40,7 +40,7 @@ DLLProjectList::~DLLProjectList()
  * @param a Position ADT pos representing the current node
  * @return the Position ADT representing the node after the current node, assuming the input is valid
  */
-Position* DLLProjectList::After(Position* pos)
+Position* DLLProjectList::After(Position* pos) const
 {
 	DLLNode* node = static_cast<DLLNode*>(pos);
 	
@@ -56,7 +56,7 @@ Position* DLLProjectList::After(Position* pos)
  * @param a Position ADT pos representing the current node
  * @return the Position ADT representing the node before the current node, assuming the input is valid
  */
-Position* DLLProjectList::Before(Position* pos)
+Position* DLLProjectList::Before(Position* pos) const
 {
 	DLLNode* node = static_cast<DLLNode*>(pos);
 	
@@ -71,7 +71,7 @@ Position* DLLProjectList::Before(Position* pos)
  *
  * @return the Position ADT that represents the beginning of the list
  */
-Position* DLLProjectList::First()
+Position* DLLProjectList::First() const
 {
 	return head;
 }
@@ -159,7 +159,7 @@ bool DLLProjectList::IsLast(Position* pos) const
  *
  * @return the Position ADT that represents the end of the list
  */
-Position* DLLProjectList::Last()
+Position* DLLProjectList::Last() const
 {
 	return tail;
 }
